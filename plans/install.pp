@@ -90,6 +90,20 @@ plan peadm::install (
 
   peadm::assert_supported_pe_version($version, $permit_unsafe_versions)
 
+  run_plan('peadm::subplans::preinstall',
+    # Standard
+    primary_host                   => $primary_host,
+    replica_host                   => $replica_host,
+
+    # Large
+    compiler_hosts                 => $compiler_hosts,
+    legacy_compilers               => $legacy_compilers,
+
+    # Extra Large
+    primary_postgresql_host        => $primary_postgresql_host,
+    replica_postgresql_host        => $replica_postgresql_host,
+  )
+
   $install_result = run_plan('peadm::subplans::install',
     # Standard
     primary_host                   => $primary_host,
